@@ -1,4 +1,4 @@
-# Confiable, la transparence 
+# Confiable, transparence et confiance
 
 ## Restaurons la confiance grâce à la transparence !
 

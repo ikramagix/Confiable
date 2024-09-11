@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  party: MyString
+  position: MyString
+  created_at: 2024-09-11 12:34:14
+  updated_at: 2024-09-11 12:34:14
+
+two:
+  name: MyString
+  party: MyString
+  position: MyString
+  created_at: 2024-09-11 12:34:14
+  updated_at: 2024-09-11 12:34:14

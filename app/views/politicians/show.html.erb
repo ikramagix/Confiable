@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @politician %>
+
+<div>
+  <%= link_to "Edit this politician", edit_politician_path(@politician) %> |
+  <%= link_to "Back to politicians", politicians_path %>
+
+  <%= button_to "Destroy this politician", @politician, method: :delete %>
+</div>

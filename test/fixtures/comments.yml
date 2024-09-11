@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  promise: one
+  content: MyText
+  created_at: 2024-09-11 12:34:37
+  updated_at: 2024-09-11 12:34:37
+
+two:
+  user: two
+  promise: two
+  content: MyText
+  created_at: 2024-09-11 12:34:37
+  updated_at: 2024-09-11 12:34:37

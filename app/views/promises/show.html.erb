@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @promise %>
+
+<div>
+  <%= link_to "Edit this promise", edit_promise_path(@promise) %> |
+  <%= link_to "Back to promises", promises_path %>
+
+  <%= button_to "Destroy this promise", @promise, method: :delete %>
+</div>

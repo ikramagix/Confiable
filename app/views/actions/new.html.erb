@@ -1,0 +1,11 @@
+<% content_for :title, "New action" %>
+
+<h1>New action</h1>
+
+<%= render "form", action: @action %>
+
+<br>
+
+<div>
+  <%= link_to "Back to actions", actions_path %>
+</div>

@@ -1,0 +1,12 @@
+<% content_for :title, "Editing promise" %>
+
+<h1>Editing promise</h1>
+
+<%= render "form", promise: @promise %>
+
+<br>
+
+<div>
+  <%= link_to "Show this promise", @promise %> |
+  <%= link_to "Back to promises", promises_path %>
+</div>

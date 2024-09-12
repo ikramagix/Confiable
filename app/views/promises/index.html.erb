@@ -1,16 +1,19 @@
-<p style="color: green"><%= notice %></p>
+<%= form_with url: promises_path, method: :get, local: true do %>
+  <%= label_tag :search, "Search Promises" %>
+  <%= text_field_tag :search, params[:search], placeholder: "Search by title or description" %>
 
-<% content_for :title, "Promises" %>
+  <%= label_tag :status, "Filter by Status" %>
+  <%= select_tag :status, options_for_select(["pending", "in_progress", "fulfilled", "failed"], params[:status]), include_blank: true %>
 
-<h1>Promises</h1>
+  <%= submit_tag "Search" %>
+<% end %>
 
-<div id="promises">
-  <% @promises.each do |promise| %>
-    <%= render promise %>
-    <p>
-      <%= link_to "Show this promise", promise %>
-    </p>
-  <% end %>
-</div>
+<% @promises.each do |promise| %>
+  <p>
+    <strong>Title:</strong> <%= promise.title %><br>
+    <strong>Description:</strong> <%= promise.description %><br>
+    <strong>Status:</strong> <%= promise.status %>
+  </p>
+<% end %>
 
-<%= link_to "New promise", new_promise_path %>
+  <%= link_to "Toutes les promesses", promises_path %>

@@ -59,3 +59,9 @@ group :test do
 end
 
 gem "dockerfile-rails", ">= 1.6", :group => :development
+
+gem "devise", "~> 4.9"
+
+gem "faker", "~> 3.4"
+
+gem "table_print", "~> 1.5"

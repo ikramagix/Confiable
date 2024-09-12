@@ -1,4 +1,4 @@
-=begin 
+=begin
 
 NEXT STEP: GATHER TOTAL DATA FOR SCHEDULING LATER A DAILY SCHEDULED TASK AFTER TEST
 
@@ -60,11 +60,11 @@ end
 =end
 
 # app/services/data_gouv_api_service.rb
-require 'nokogiri'
-require 'open-uri'
+require "nokogiri"
+require "open-uri"
 
 class DataGouvApiService
-  URL = 'https://www.hatvp.fr/livraison/merge/declarations.xml'
+  URL = "https://www.hatvp.fr/livraison/merge/declarations.xml"
 
   def fetch_and_save_declarations(limit = 15)
     xml_data = URI.open(URL).read
@@ -77,18 +77,18 @@ class DataGouvApiService
     document = Nokogiri::XML(xml_data)
 
     # Process only the first 15 records
-    document.xpath('//declaration').first(limit).each do |declaration_node|
+    document.xpath("//declaration").first(limit).each do |declaration_node|
       # Extracting data from XML nodes
-      last_name = declaration_node.at_xpath('nom')&.text
-      first_name = declaration_node.at_xpath('prenom')&.text
-      birth_date = declaration_node.at_xpath('dateNaissance')&.text
-      role = declaration_node.at_xpath('fonction')&.text
-      organization = declaration_node.at_xpath('organisme')&.text
-      publication_date = declaration_node.at_xpath('datePublication')&.text
-      location = declaration_node.at_xpath('localisation')&.text
-      declaration_link = declaration_node.at_xpath('url')&.text
-      assets = declaration_node.at_xpath('patrimoine')&.text
-      additional_info = declaration_node.at_xpath('autres_informations')&.text
+      last_name = declaration_node.at_xpath("nom")&.text
+      first_name = declaration_node.at_xpath("prenom")&.text
+      birth_date = declaration_node.at_xpath("dateNaissance")&.text
+      role = declaration_node.at_xpath("fonction")&.text
+      organization = declaration_node.at_xpath("organisme")&.text
+      publication_date = declaration_node.at_xpath("datePublication")&.text
+      location = declaration_node.at_xpath("localisation")&.text
+      declaration_link = declaration_node.at_xpath("url")&.text
+      assets = declaration_node.at_xpath("patrimoine")&.text
+      additional_info = declaration_node.at_xpath("autres_informations")&.text
 
       # Find existing politician or create a new one if it doesn't exist
       politician = Politician.find_or_create_by(last_name: last_name, first_name: first_name, role: role) do |p|

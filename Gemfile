@@ -65,3 +65,17 @@ gem "devise", "~> 4.9"
 gem "faker", "~> 3.4"
 
 gem "table_print", "~> 1.5"
+
+gem "pdf-reader", "~> 2.12"
+
+gem "gruff", "~> 0.25.0"
+
+gem "csv", "~> 3.3"
+
+gem "tempfile", "~> 0.2.1"
+
+gem "net-http", "~> 0.4.1"
+
+gem "uri", "~> 0.13.1"
+
+gem "open-uri", "~> 0.4.1"

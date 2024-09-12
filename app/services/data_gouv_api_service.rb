@@ -30,7 +30,7 @@ class DataGouvApiService
       first_name = row['prenom']&.strip
       last_name = row['nom']&.strip
       position = row['qualite']&.strip
-      type_duty = row['type_mandat']&.strip
+      role = row['type_mandat']&.strip # Mapping 'type_mandat' to 'role' in the DB
       department = row['departement']&.strip
       organization = row['organisme']&.strip
       publication_date = row['date_publication']&.strip
@@ -43,7 +43,7 @@ class DataGouvApiService
       politician = Politician.find_or_initialize_by(last_name: last_name, first_name: first_name, position: position)
       politician.assign_attributes(
         cvl: cvl,
-        type_duty: type_duty,
+        role: role, # Correctly setting the 'role' field
         department: department,
         organization: organization,
         publication_date: publication_date

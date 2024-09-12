@@ -1,18 +1,44 @@
-<%= form_with url: politicians_path, method: :get, local: true do %>
-  <%= label_tag :search, "Search Politicians" %>
-  <%= text_field_tag :search, params[:search] %>
+<!-- app/views/politicians/index.html.erb -->
+<div class="container my-4">
+  <h2 class="mb-3">Search and Filter Politicians</h2>
+  
+  <%= form_with url: politicians_path, method: :get, local: true, class: "row g-3 align-items-center" do %>
+    <div class="col-auto">
+      <%= label_tag :search, "Search Politicians", class: "form-label" %>
+      <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Enter name..." %>
+    </div>
 
-  <%= label_tag :position, "Filter by Position" %>
-  <%= select_tag :position, options_for_select(["President", "Senator"], params[:position]), include_blank: true %>
+    <div class="col-auto">
+      <%= label_tag :position, "Filter by Position", class: "form-label" %>
+      <%= select_tag :position, options_for_select(Politician.distinct.pluck(:position).compact, params[:position]), include_blank: "Select Position", class: "form-select" %>
+    </div>
 
-  <%= label_tag :party, "Filter by Party" %>
-  <%= select_tag :party, options_for_select(Politician.distinct.pluck(:party), params[:party]), include_blank: true %>
+    <div class="col-auto">
+      <%= label_tag :party, "Filter by Party", class: "form-label" %>
+      <%= select_tag :party, options_for_select(Politician.distinct.pluck(:party).compact, params[:party]), include_blank: "Select Party", class: "form-select" %>
+    </div>
 
-  <%= submit_tag "Search" %>
-<% end %>
+    <div class="col-auto">
+      <%= submit_tag "Search", class: "btn btn-primary mt-4" %>
+    </div>
+  <% end %>
 
-<% @politicians.each do |politician| %>
-  <p><%= politician.full_title %></p>
-<% end %>
+  <hr class="my-4">
 
-<%= link_to "Voir tous les politiciens", politicians_path %>
+  <div class="mt-3">
+    <% if @politicians.any? %>
+      <% @politicians.each do |politician| %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title"><%= politician.full_title %></h5>
+            <p class="card-text">Position: <%= politician.position %> | Party: <%= politician.party %></p>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-muted">No politicians found matching your criteria.</p>
+    <% end %>
+  </div>
+
+  <%= link_to "Voir tous les politiciens", politicians_path, class: "btn btn-secondary mt-3" %>
+</div>

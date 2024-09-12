@@ -4,6 +4,13 @@ class PoliticiansController < ApplicationController
   # GET /politicians or /politicians.json
   def index
     @politicians = Politician.all
+
+    # Filtering by position and party if params are present
+    @politicians = @politicians.by_position(params[:position]) if params[:position].present?
+    @politicians = @politicians.by_party(params[:party]) if params[:party].present?
+
+    # Basic search functionality
+    @politicians = @politicians.where("name ILIKE ?", "%#{params[:search]}%") if params[:search].present?
   end
 
   # GET /politicians/1 or /politicians/1.json

@@ -1,16 +1,16 @@
-<p style="color: green"><%= notice %></p>
+<%= form_with url: politicians_path, method: :get, local: true do %>
+  <%= label_tag :search, "Search Politicians" %>
+  <%= text_field_tag :search, params[:search] %>
 
-<% content_for :title, "Politicians" %>
+  <%= label_tag :position, "Filter by Position" %>
+  <%= select_tag :position, options_for_select(["President", "Senator"], params[:position]), include_blank: true %>
 
-<h1>Politicians</h1>
+  <%= label_tag :party, "Filter by Party" %>
+  <%= select_tag :party, options_for_select(Politician.distinct.pluck(:party), params[:party]), include_blank: true %>
 
-<div id="politicians">
-  <% @politicians.each do |politician| %>
-    <%= render politician %>
-    <p>
-      <%= link_to "Show this politician", politician %>
-    </p>
-  <% end %>
-</div>
+  <%= submit_tag "Search" %>
+<% end %>
 
-<%= link_to "New politician", new_politician_path %>
+<% @politicians.each do |politician| %>
+  <p><%= politician.full_title %></p>
+<% end %>

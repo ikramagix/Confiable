@@ -3,9 +3,9 @@ class Politician < ApplicationRecord
     has_many :promises, dependent: :destroy # A politician has many promises
 
     # Validations
-    validates :first_name, presence: true, uniqueness: true
-    validates :last_name, presence: true, uniqueness: true # Ensures the politician's name is present and unique
-    # Ensures the politician's name is present and unique
+    validates :first_name, presence: true
+    validates :last_name, presence: true 
+    # Ensures the politician's name presence
     validates :position, presence: true # Ensures the position (e.g., President) is specified
 
     # Scopes & Search

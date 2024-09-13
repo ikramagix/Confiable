@@ -46,7 +46,7 @@ class PoliticianPdfService
   private
 
   def handle_missing_data
-    missing_info_message = "Information not available from the Haute Autorité pour la Transparence de la Vie Publique (https://www.hatvp.fr/). Please inform your representative."
+    missing_info_message = "Oulala, c'est flou. Cette information n'est pas disponible dans la base de données de la Haute Autorité pour la Transparence de la Vie Publique (https://www.hatvp.fr/). Pourtant c'est requis par la loi n° 2013-907 du 11 octobre 2013 relative à la transparence de la vie publique. N'hésitez pas à en informer votre élu(e), il s'agit peut-être d'un oubli."
     @politician.update(additional_info: missing_info_message)
   end
 

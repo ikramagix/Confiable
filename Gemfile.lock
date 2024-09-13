@@ -120,12 +120,7 @@ GEM
       i18n (>= 1.8.11, < 2)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    gruff (0.25.0)
-      bigdecimal (>= 3.0)
-      histogram
-      rmagick (>= 5.5)
     hashery (2.1.2)
-    histogram (0.2.4.1)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.0.1)
@@ -179,7 +174,6 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
-    observer (0.1.2)
     open-uri (0.4.1)
       stringio
       time
@@ -196,7 +190,6 @@ GEM
       ruby-rc4
       ttfunk
     pg (1.5.8)
-    pkg-config (1.5.6)
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
@@ -251,9 +244,6 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.3.7)
-    rmagick (6.0.1)
-      observer (~> 0.1)
-      pkg-config (~> 1.4)
     rubocop (1.66.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -353,7 +343,6 @@ DEPENDENCIES
   dockerfile-rails (>= 1.6)
   dotenv-rails
   faker (~> 3.4)
-  gruff (~> 0.25.0)
   importmap-rails
   jbuilder
   net-http (~> 0.4.1)

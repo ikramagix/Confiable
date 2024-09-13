@@ -68,8 +68,6 @@ gem "table_print", "~> 1.5"
 
 gem "pdf-reader", "~> 2.12"
 
-gem "gruff", "~> 0.25.0"
-
 gem "csv", "~> 3.3"
 
 gem "tempfile", "~> 0.2.1"

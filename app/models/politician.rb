@@ -8,12 +8,11 @@ class Politician < ApplicationRecord
     # Ensures the politician's name is present and unique
     validates :position, presence: true # Ensures the position (e.g., President) is specified
 
-    # Scopes
+    # Scopes & Search
     scope :by_position, ->(position) { where(position: position) } # Scope to filter politicians by their position
     scope :by_party, ->(party) { where(party: party) } # Scope to filter politicians by their party
 
-    # Instance Methods
-    def full_title
-      "#{name}, #{position} de #{party}"
-    end
+    scope :search, ->(query) {
+      where('first_name ILIKE :query OR last_name ILIKE :query OR position ILIKE :query OR party ILIKE :query', query: "%#{query}%") if query.present?
+    }
 end

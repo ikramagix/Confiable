@@ -4,7 +4,7 @@ require 'csv'
 class DataGouvApiService
   CSV_PATH = Rails.root.join('public', 'liste.csv') # Path to the local CSV file
 
-  def gather_data(limit = 15)
+  def gather_data
     csv_data = read_csv(CSV_PATH)
     parse_and_save_data(csv_data, limit)
   rescue StandardError => e

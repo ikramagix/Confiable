@@ -1,10 +1,42 @@
-<p style="color: green"><%= notice %></p>
+<!-- app/views/politicians/show.html.erb -->
+<div class="container my-4">
+  <div class="card mb-3 shadow-sm">
+    <div class="card-body">
+      <h3 class="card-title"><%= "#{@politician.cvl} #{@politician.first_name} #{@politician.last_name}" %></h3>
+      <p class="card-text">
+        <strong>Poste :</strong> <%= @politician.position.presence || "Non spécifié" %><br>
+        <strong>Parti :</strong> <%= @politician.party.presence || "Non spécifié" %><br>
+        <strong>Rôle :</strong> <%= @politician.role.presence || "Non spécifié" %><br>
+        <strong>Département :</strong> <%= @politician.department.presence || "Non spécifié" %><br>
+        <strong>Organisme :</strong> <%= @politician.organization.presence || "Non spécifié" %><br>
+        <strong>Date de Publication :</strong> <%= @politician.publication_date&.strftime('%d %B %Y') %><br>
+        <strong>Lieu :</strong> <%= @politician.location.presence || "Non spécifié" %>
+      </p>
+      <% if @politician.declaration_link.present? %>
+        <%= link_to "Voir la Déclaration", @politician.declaration_link, target: "_blank", class: "btn btn-outline-primary btn-sm mt-2" %>
+      <% end %>
+    </div>
+  </div>
 
-<%= render @politician %>
+  <div class="card my-3 shadow-sm">
+    <div class="card-header bg-primary text-white">
+      Informations Complémentaires
+    </div>
+    <div class="card-body">
+      <p class="card-text"><%= @politician.additional_info.presence || "Aucune information complémentaire disponible." %></p>
+    </div>
+  </div>
 
-<div>
-  <%= link_to "Edit this politician", edit_politician_path(@politician) %> |
-  <%= link_to "Back to politicians", politicians_path %>
+  <div class="card my-3 shadow-sm">
+    <div class="card-header bg-primary text-white">
+      Patrimoine
+    </div>
+    <div class="card-body">
+      <p class="card-text"><%= @politician.assets.presence || "Aucun patrimoine déclaré." %></p>
+    </div>
+  </div>
 
-  <%= button_to "Destroy this politician", @politician, method: :delete %>
+  <div class="d-flex justify-content-between mt-4">
+    <%= link_to "Retour à la liste des politiciens", politicians_path, class: "btn btn-secondary" %>
+  </div>
 </div>

@@ -16,7 +16,6 @@ class Promise < ApplicationRecord
   # Search scope
   scope :search, ->(query) { where("title ILIKE ? OR description ILIKE ?", "%#{query}%", "%#{query}%") }
 
-
   # Instance Methods
   def progress_summary
     "#{actions.count} action(s) entreprise(s) pour tenir cette promesse." # Summarizes the number of actions related to this promise

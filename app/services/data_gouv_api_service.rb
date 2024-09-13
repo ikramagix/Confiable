@@ -6,7 +6,7 @@ class DataGouvApiService
 
   def gather_data
     csv_data = read_csv(CSV_PATH)
-    parse_and_save_data(csv_data, limit)
+    parse_and_save_data(csv_data)
   rescue StandardError => e
     Rails.logger.error("Error gathering data: #{e.message}")
   end
@@ -24,8 +24,8 @@ class DataGouvApiService
     raise
   end
 
-  def parse_and_save_data(csv_data, limit)
-    csv_data.first(limit).each do |row|
+  def parse_and_save_data(csv_data)
+    csv_data.each do |row|
       cvl = row["civilite"]&.strip
       first_name = row["prenom"]&.strip
       last_name = row["nom"]&.strip

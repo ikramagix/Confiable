@@ -12,9 +12,6 @@
         <strong>Date de Publication :</strong> <%= @politician.publication_date&.strftime('%d %B %Y') %><br>
         <strong>Lieu :</strong> <%= @politician.location.presence || "Non spécifié" %>
       </p>
-      <% if @politician.declaration_link.present? %>
-        <%= link_to "Voir la Déclaration", @politician.declaration_link, target: "_blank", class: "btn btn-outline-primary btn-sm mt-2" %>
-      <% end %>
     </div>
   </div>
 

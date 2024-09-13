@@ -336,6 +336,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   brakeman
+  bundler (~> 2.5)
   capybara
   csv (~> 3.3)
   debug

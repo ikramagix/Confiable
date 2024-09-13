@@ -118,7 +118,6 @@ GEM
     erubi (1.13.0)
     faker (3.4.2)
       i18n (>= 1.8.11, < 2)
-    foreman (0.88.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
     gruff (0.25.0)
@@ -304,18 +303,6 @@ GEM
       railties (>= 6.0.0)
     stringio (3.1.1)
     table_print (1.5.7)
-    tailwindcss-rails (2.7.3)
-      railties (>= 7.0.0)
-    tailwindcss-rails (2.7.3-aarch64-linux)
-      railties (>= 7.0.0)
-    tailwindcss-rails (2.7.3-arm-linux)
-      railties (>= 7.0.0)
-    tailwindcss-rails (2.7.3-arm64-darwin)
-      railties (>= 7.0.0)
-    tailwindcss-rails (2.7.3-x86_64-darwin)
-      railties (>= 7.0.0)
-    tailwindcss-rails (2.7.3-x86_64-linux)
-      railties (>= 7.0.0)
     tempfile (0.2.1)
     thor (1.3.2)
     time (0.4.0)
@@ -366,7 +353,6 @@ DEPENDENCIES
   dockerfile-rails (>= 1.6)
   dotenv-rails
   faker (~> 3.4)
-  foreman (~> 0.88.1)
   gruff (~> 0.25.0)
   importmap-rails
   jbuilder
@@ -381,7 +367,6 @@ DEPENDENCIES
   sprockets-rails
   stimulus-rails
   table_print (~> 1.5)
-  tailwindcss-rails (~> 2.7)
   tempfile (~> 0.2.1)
   turbo-rails
   tzinfo-data

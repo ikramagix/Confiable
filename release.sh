@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# Set up the environment correctly
+export PATH="/usr/local/bundle/bin:$PATH"
+
 # Prepare the database
-./bin/rails db:prepare
+bundle exec rails db:prepare
 
 # Check if the previous command was successful
 if [ $? -ne 0 ]; then
@@ -9,8 +12,8 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Run the data gathering task
-rails data_gouv:gather_data
+# Run the data gathering task using bundle exec to ensure the correct environment
+bundle exec rails data_gouv:gather_data
 
 # Check if the data gathering was successful
 if [ $? -ne 0 ]; then

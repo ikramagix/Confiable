@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
+  get "statics/privacy_policy"
   resources :comments
   resources :actions
   resources :promises
   resources :politicians
-  resources :users
   devise_for :users
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -17,4 +18,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "politicians#index"
+    get "privacy_policy", to: "statics#privacy_policy", as: :privacy_policy
 end

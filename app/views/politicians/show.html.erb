@@ -29,7 +29,17 @@
       Patrimoine
     </div>
     <div class="card-body">
-      <p class="card-text"><%= @politician.assets.presence || "Aucun patrimoine déclaré." %></p>
+      <% if @politician.assets.present? %>
+        <% declared_income = JSON.parse(@politician.assets) %>
+        <p><strong>Revenus Déclarés par Année :</strong></p>
+        <ul>
+          <% declared_income.each do |income_entry| %>
+            <li><%= income_entry %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="card-text">Aucun patrimoine déclaré.</p>
+      <% end %>
     </div>
   </div>
 

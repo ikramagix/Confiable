@@ -89,7 +89,7 @@ class PoliticiansController < ApplicationController
     flash[:alert] = "Politician not found."
     redirect_to politicians_path
   end
-  
+
     # Only allow a list of trusted parameters through.
     def politician_params
       params.require(:politician).permit(:name, :party, :position, :created_at, :updated_at)

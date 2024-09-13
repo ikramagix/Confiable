@@ -27,11 +27,11 @@ echo "Starting deployment and data fetching..."
 echo "Running analysis for all politicians..."
 bundle exec rails runner "
   Politician.find_each do |politician|
-    puts 'Processing: ' + politician.first_name + ' ' + politician.last_name
+    puts 'Processing: ' + politician.first_name.to_s + ' ' + politician.last_name.to_s
     begin
       PoliticianPdfService.new(politician).fetch_and_analyze_pdf
     rescue => e
-      puts 'Error processing ' + politician.first_name + ' ' + politician.last_name + ': ' + e.message
+      puts 'Error processing ' + politician.first_name.to_s + ' ' + politician.last_name.to_s + ': ' + e.message
     end
   end
 "

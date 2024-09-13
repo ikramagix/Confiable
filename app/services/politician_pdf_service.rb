@@ -88,6 +88,7 @@ class PoliticianPdfService
   def extract_income_entries(text)
     entries = []
     text.scan(/(Rémunération|indemnité|gratification)(.*?)(\d{4}\s*:\s*[\d\s,]+€)/im) do |_, _, income|
+      next if income.nil? || income.strip.empty?
       entries << income.strip
     end
     entries

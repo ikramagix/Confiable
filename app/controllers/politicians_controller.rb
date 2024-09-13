@@ -73,8 +73,8 @@ class PoliticiansController < ApplicationController
     # @politician is already set by the before_action
     @politician = Politician.find(params[:id])
 
-    # Trigger data fetching only if not already saved
-    FetchPoliticianPdfJob.perform_later(@politician.id) unless @politician.assets.present? && @politician.additional_info.present?
+    # Optionally, trigger the job to fetch and analyze the PDF
+    FetchPoliticianPdfJob.perform_later(@politician.id)
 
     # or directly call the service (if not using a job)
     # service = PoliticianPdfService.new(@politician)
@@ -89,7 +89,6 @@ class PoliticiansController < ApplicationController
     flash[:alert] = "Politician not found."
     redirect_to politicians_path
   end
-
     # Only allow a list of trusted parameters through.
     def politician_params
       params.require(:politician).permit(:name, :party, :position, :created_at, :updated_at)

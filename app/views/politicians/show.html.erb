@@ -33,12 +33,10 @@
         <% declared_income = JSON.parse(@politician.assets) %>
         <p><strong>Revenus Déclarés par Année :</strong></p>
         <ul>
-          <% declared_income.each do |year, data| %>
-            <% next if year == 'total_income' %>
-            <li><strong><%= year %> :</strong> <%= number_to_currency(data['amount'], unit: "€", format: "%n %u") %></li>
+          <% declared_income.each do |income_entry| %>
+            <li><%= income_entry %></li>
           <% end %>
         </ul>
-        <p><strong>Total Revenu Déclaré :</strong> <%= number_to_currency(declared_income['total_income'], unit: "€", format: "%n %u") %></p>
       <% else %>
         <p class="card-text">Aucun patrimoine déclaré.</p>
       <% end %>

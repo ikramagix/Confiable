@@ -1,0 +1,18 @@
+<!-- app/views/layouts/_footer.html.erb -->
+<footer class="bg-light text-dark py-4 mt-auto">
+  <div class="container d-flex justify-content-between align-items-center">
+    <ul class="nav">
+      <li class="nav-item">
+        <%= link_to 'Politique de Confidentialité', privacy_policy_path, class: 'nav-link text-dark' %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Contact', 'mailto:contact@confiable.com', class: 'nav-link text-dark' %>
+      </li>
+    </ul>
+    <div class="d-flex align-items-center">
+      <span class="text-muted me-2">&copy; <%= Time.now.year %> Confiable</span>
+      <%= image_tag 'logo.png', alt: 'Confiable Logo', class: 'footer-logo', style: 'height: 30px;' %>
+    </div>
+  </div>
+</footer>
+

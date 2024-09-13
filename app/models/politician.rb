@@ -3,7 +3,7 @@ class Politician < ApplicationRecord
     has_many :promises, dependent: :destroy # A politician has many promises
 
     # Validations
-    validates :first_name, presence: true, uniqueness: true 
+    validates :first_name, presence: true, uniqueness: true
     validates :last_name, presence: true, uniqueness: true # Ensures the politician's name is present and unique
     # Ensures the politician's name is present and unique
     validates :position, presence: true # Ensures the position (e.g., President) is specified
@@ -13,6 +13,6 @@ class Politician < ApplicationRecord
     scope :by_party, ->(party) { where(party: party) } # Scope to filter politicians by their party
 
     scope :search, ->(query) {
-      where('first_name ILIKE :query OR last_name ILIKE :query OR position ILIKE :query OR party ILIKE :query', query: "%#{query}%") if query.present?
+      where("first_name ILIKE :query OR last_name ILIKE :query OR position ILIKE :query OR party ILIKE :query", query: "%#{query}%") if query.present?
     }
 end

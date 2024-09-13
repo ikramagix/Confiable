@@ -1,6 +1,6 @@
 # lib/tasks/data_gouv_import.rake
 namespace :data_gouv do
-    desc 'Gather data from CSV and save to database'
+    desc "Gather data from CSV and save to database"
     task gather_data: :environment do
       begin
         service = DataGouvApiService.new
@@ -12,4 +12,3 @@ namespace :data_gouv do
       end
     end
   end
-  

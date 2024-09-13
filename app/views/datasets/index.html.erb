@@ -1,0 +1,30 @@
+<h1>Déclarations de Patrimoine des Responsables Publics</h1>
+
+<% if @datasets.present? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Fonction</th>
+        <th>Organisme</th>
+        <th>Date de Déclaration</th>
+        <th>Lien vers la Déclaration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @datasets.each do |dataset| %>
+        <tr>
+          <td><%= dataset[:nom] %></td>
+          <td><%= dataset[:prenom] %></td>
+          <td><%= dataset[:fonction] %></td>
+          <td><%= dataset[:organisme] %></td>
+          <td><%= dataset[:date_declaration] %></td>
+          <td><%= link_to 'Voir la Déclaration', dataset[:lien_declaration], target: '_blank' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Aucune déclaration disponible pour le moment.</p>
+<% end %>

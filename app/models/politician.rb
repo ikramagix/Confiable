@@ -4,7 +4,7 @@ class Politician < ApplicationRecord
 
     # Validations
     validates :first_name, presence: true
-    validates :last_name, presence: true 
+    validates :last_name, presence: true
     # Ensures the politician's name presence
     validates :position, presence: true # Ensures the position (e.g., President) is specified
 

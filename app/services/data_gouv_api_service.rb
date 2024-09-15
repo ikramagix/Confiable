@@ -43,7 +43,7 @@ class DataGouvApiService
       politician = Politician.find_or_initialize_by(last_name: last_name, first_name: first_name, position: position)
       politician.assign_attributes(
         cvl: cvl,
-        role: role, # Correctly setting the 'role' field
+        role: role,
         department: department,
         organization: organization,
         publication_date: publication_date

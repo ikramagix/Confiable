@@ -3,11 +3,23 @@ class PoliticiansController < ApplicationController
 
   # GET /politicians or /politicians.json
   def index
-    @politicians = Politician.all
-  end
+    if params[:search].present? || params[:position].present? || params[:party].present?
+      # Start with all politicians and apply filters if search or filter params are present
+      @politicians = Politician.all
 
-  # GET /politicians/1 or /politicians/1.json
-  def show
+      # Filtering by position if params[:position] is present
+      @politicians = @politicians.by_position(params[:position]) if params[:position].present?
+
+      # Search functionality using the search scope
+      @politicians = @politicians.search(params[:search]) if params[:search].present?
+
+      # Set a flag to indicate if a search or filter was performed
+      @searched = true
+    else
+      # If no search or filter is done, display a random set of 10 politicians
+      @politicians = Politician.order("RANDOM()").limit(10)
+      @searched = false
+    end
   end
 
   # GET /politicians/new
@@ -57,11 +69,26 @@ class PoliticiansController < ApplicationController
     end
   end
 
+  def show
+    # @politician is already set by the before_action
+    @politician = Politician.find(params[:id])
+
+    # Optionally, trigger the job to fetch and analyze the PDF
+    FetchPoliticianPdfJob.perform_later(@politician.id)
+
+    # or directly call the service (if not using a job)
+    # service = PoliticianPdfService.new(@politician)
+    # service.fetch_and_analyze_pdf
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_politician
-      @politician = Politician.find(params[:id])
-    end
+
+  def set_politician
+    @politician = Politician.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "Politician not found."
+    redirect_to politicians_path
+  end
 
     # Only allow a list of trusted parameters through.
     def politician_params

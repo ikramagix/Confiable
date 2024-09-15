@@ -4,6 +4,13 @@ class PromisesController < ApplicationController
   # GET /promises or /promises.json
   def index
     @promises = Promise.all
+
+    # Apply search if query is present
+    @promises = @promises.search(params[:search]) if params[:search].present?
+
+    # Additional filtering by status, if needed
+    @promises = @promises.by_status(params[:status]) if params[:status].present?
+    @promises = @promises.recent
   end
 
   # GET /promises/1 or /promises/1.json

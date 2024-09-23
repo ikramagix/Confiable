@@ -108,7 +108,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    dockerfile-rails (1.6.17)
+    dockerfile-rails (1.6.18)
       rails (>= 3.0.0)
     dotenv (3.1.4)
     dotenv-rails (3.1.4)

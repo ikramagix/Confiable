@@ -108,7 +108,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    dockerfile-rails (1.6.19)
+    dockerfile-rails (1.6.20)
       rails (>= 3.0.0)
     dotenv (3.1.4)
     dotenv-rails (3.1.4)
@@ -128,7 +128,7 @@ GEM
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.7.2)
-    irb (1.14.0)
+    irb (1.14.1)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jbuilder (2.13.0)

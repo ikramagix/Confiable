@@ -308,7 +308,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
-    uri (0.13.1)
+    uri (1.0.0)
     useragent (0.16.10)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -361,7 +361,7 @@ DEPENDENCIES
   tempfile (~> 0.3.0)
   turbo-rails
   tzinfo-data
-  uri (~> 0.13.1)
+  uri (~> 1.0.0)
   web-console
 
 BUNDLED WITH

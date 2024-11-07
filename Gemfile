@@ -76,6 +76,6 @@ gem "net-http", "~> 0.4.1"
 
 gem "uri", "~> 0.13.1"
 
-gem "open-uri", "~> 0.4.1"
+gem "open-uri", "~> 0.5.0"
 
 gem "bundler", "~> 2.5"

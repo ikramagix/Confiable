@@ -100,7 +100,7 @@ GEM
     connection_pool (2.4.1)
     crass (1.0.6)
     csv (3.3.0)
-    date (3.3.4)
+    date (3.4.0)
     debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
@@ -176,7 +176,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
-    open-uri (0.4.1)
+    open-uri (0.5.0)
       stringio
       time
       uri
@@ -348,7 +348,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   net-http (~> 0.4.1)
-  open-uri (~> 0.4.1)
+  open-uri (~> 0.5.0)
   pdf-reader (~> 2.12)
   pg (~> 1.5)
   puma (>= 5.0)

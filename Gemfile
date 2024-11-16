@@ -74,7 +74,7 @@ gem "tempfile", "~> 0.3.0"
 
 gem "net-http", "~> 0.5.0"
 
-gem "uri", "~> 1.0.1"
+gem "uri", "~> 1.0.2"
 
 gem "open-uri", "~> 0.5.0"
 

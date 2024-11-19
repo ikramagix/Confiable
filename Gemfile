@@ -70,7 +70,7 @@ gem "pdf-reader", "~> 2.13"
 
 gem "csv", "~> 3.3"
 
-gem "tempfile", "~> 0.3.0"
+gem "tempfile", "~> 0.3.1"
 
 gem "net-http", "~> 0.5.0"
 

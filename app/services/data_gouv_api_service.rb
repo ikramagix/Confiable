@@ -1,44 +1,53 @@
 # app/services/data_gouv_api_service.rb
-require "csv"
+require "roo"
 
 class DataGouvApiService
-  CSV_PATH = Rails.root.join("public", "liste.csv") # Path to the local CSV file
+  XLSX_PATH = Rails.root.join("public", "liste.xlsx") # Path to the local XLSX file
 
   def gather_data
-    csv_data = read_csv(CSV_PATH)
-    parse_and_save_data(csv_data)
+    xlsx_data = read_xlsx(XLSX_PATH)
+    parse_and_save_data(xlsx_data)
   rescue StandardError => e
     Rails.logger.error("Error gathering data: #{e.message}")
   end
 
   private
 
-  def read_csv(path)
-    puts "Reading CSV from: #{path}"
-    CSV.read(path, headers: true, col_sep: ";") # Using correct delimiter ';'
+  def read_xlsx(path)
+    puts "Reading XLSX from: #{path}"
+    sheet = Roo::Excelx.new(path)
+    headers = sheet.row(1) # Assuming the first row contains headers
+    data = []
+
+    (2..sheet.last_row).each do |i| # Start from the second row
+      row_data = Hash[headers.zip(sheet.row(i))]
+      data << row_data
+    end
+
+    data
   rescue Errno::ENOENT => e
-    Rails.logger.error("CSV file not found: #{e.message}")
+    Rails.logger.error("XLSX file not found: #{e.message}")
     raise
-  rescue CSV::MalformedCSVError => e
-    Rails.logger.error("Error reading CSV file: #{e.message}")
+  rescue StandardError => e
+    Rails.logger.error("Error reading XLSX file: #{e.message}")
     raise
   end
 
-  def parse_and_save_data(csv_data)
-    csv_data.each do |row|
-      cvl = row["civilite"]&.strip
-      first_name = row["prenom"]&.strip
-      last_name = row["nom"]&.strip
-      position = row["qualite"]&.strip
-      role = row["type_mandat"]&.strip # Mapping 'type_mandat' to 'role' in the DB
-      department = row["departement"]&.strip
-      organization = row["organisme"]&.strip
-      publication_date = row["date_publication"]&.strip
-      file_name = row["nom_fichier"]&.strip # Extract file name
-
+  def parse_and_save_data(xlsx_data)
+    xlsx_data.each do |row|
+      cvl = row["civilite"].nil? ? "N/A" : row["civilite"].to_s.strip
+      first_name = row["prenom"].nil? ? "N/A" : row["prenom"].to_s.strip
+      last_name = row["nom"].nil? ? "N/A" : row["nom"].to_s.strip
+      position = row["qualite"].nil? ? "N/A" : row["qualite"].to_s.strip
+      role = row["type_mandat"].nil? ? "N/A" : row["type_mandat"].to_s.strip
+      department = row["departement"].nil? ? "N/A" : row["departement"].to_s.strip
+      organization = row["organisme"].nil? ? "N/A" : row["organisme"].to_s.strip
+      publication_date = row["date_publication"].nil? ? "N/A" : row["date_publication"].to_s.strip
+      file_name = row["nom_fichier"].nil? ? "N/A" : row["nom_fichier"].to_s.strip
+  
       # Print the file name
       puts "Processing file: #{file_name}"
-
+  
       # Find or create a politician and update their details
       politician = Politician.find_or_initialize_by(last_name: last_name, first_name: first_name, position: position)
       politician.assign_attributes(
@@ -48,7 +57,7 @@ class DataGouvApiService
         organization: organization,
         publication_date: publication_date
       )
-
+  
       # Save the politician record
       if politician.save
         Rails.logger.info("Politician #{politician.first_name} #{politician.last_name} saved successfully.")
@@ -57,6 +66,6 @@ class DataGouvApiService
       end
     end
   rescue StandardError => e
-    Rails.logger.error("Error parsing CSV data: #{e.message}")
-  end
+    Rails.logger.error("Error parsing XLSX data: #{e.message}")
+  end  
 end

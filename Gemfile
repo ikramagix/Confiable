@@ -79,3 +79,7 @@ gem "uri", "~> 1.0.2"
 gem "open-uri", "~> 0.5.0"
 
 gem "bundler", "~> 2.5"
+
+gem 'roo'
+
+gem 'charlock_holmes'

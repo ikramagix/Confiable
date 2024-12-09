@@ -9,7 +9,8 @@
         <strong>Rôle :</strong> <%= @politician.role.presence || "Non spécifié" %><br>
         <strong>Département :</strong> <%= @politician.department.presence || "Non spécifié" %><br>
         <strong>Organisme :</strong> <%= @politician.organization.presence || "Non spécifié" %><br>
-        <strong>Date de Publication :</strong> <%= @politician.publication_date&.strftime('%d %B %Y') %><br>
+        <strong>Date de Publication :</strong> 
+        <%= @politician.publication_date ? I18n.l(@politician.publication_date, format: :long) : 'Non disponible' %><br>
         <strong>Lieu :</strong> <%= @politician.location.presence || "Non spécifié" %>
       </p>
     </div>

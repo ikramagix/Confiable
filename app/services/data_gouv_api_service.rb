@@ -16,10 +16,10 @@ class DataGouvApiService
   def read_xlsx(path)
     puts "Reading XLSX from: #{path}"
     sheet = Roo::Excelx.new(path)
-    headers = sheet.row(1) # Assuming the first row contains headers
+    headers = sheet.row(1)
     data = []
 
-    (2..sheet.last_row).each do |i| # Start from the second row
+    (2..sheet.last_row).each do |i|
       row_data = Hash[headers.zip(sheet.row(i))]
       data << row_data
     end

@@ -213,9 +213,7 @@ fr:
       two_words_connector: " et "
       words_connector: ", "
   time:
-    am: am
     formats:
-      default: "%d %B %Y %Hh %Mmin %Ss"
-      long: "%A %d %B %Y %Hh%M"
-      short: "%d %b %Hh%M"
-    pm: pm
+      default: "%d %B %Y %H:%M:%S"
+      long: "%A %d %B %Y à %H:%M"
+      short: "%d %b à %H:%M"

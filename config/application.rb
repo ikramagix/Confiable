@@ -23,5 +23,15 @@ module Confiable
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # i18n locale configuration 
+    # Set the default locale to French
+    config.i18n.default_locale = :fr
+
+    # Ensure all available locales are loaded
+    config.i18n.available_locales = [:en, :fr]
+
+    # Fallback to English if a translation is missing
+    config.i18n.fallbacks = [:en]    
   end
 end

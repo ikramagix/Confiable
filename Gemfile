@@ -62,7 +62,7 @@ gem "dockerfile-rails", ">= 1.6", group: :development
 
 gem "devise", "~> 4.9"
 
-gem "faker", "~> 3.5"
+gem "faussaire"
 
 gem "table_print", "~> 1.5"
 
@@ -81,3 +81,5 @@ gem "open-uri", "~> 0.5.0"
 gem "bundler", "~> 2.5"
 
 gem 'roo'
+
+gem 'rails-i18n'

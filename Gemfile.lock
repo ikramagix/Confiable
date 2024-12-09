@@ -118,8 +118,7 @@ GEM
       railties (>= 6.1)
     drb (2.2.1)
     erubi (1.13.0)
-    faker (3.5.1)
-      i18n (>= 1.8.11, < 2)
+    faussaire (1.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashery (2.1.2)
@@ -227,6 +226,9 @@ GEM
     rails-html-sanitizer (1.6.1)
       loofah (~> 2.21)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
+    rails-i18n (8.0.1)
+      i18n (>= 0.7, < 2)
+      railties (>= 8.0.0, < 9)
     railties (8.0.0)
       actionpack (= 8.0.0)
       activesupport (= 8.0.0)
@@ -348,7 +350,7 @@ DEPENDENCIES
   devise (~> 4.9)
   dockerfile-rails (>= 1.6)
   dotenv-rails
-  faker (~> 3.5)
+  faussaire
   importmap-rails
   jbuilder
   net-http (~> 0.5.0)
@@ -357,6 +359,7 @@ DEPENDENCIES
   pg (~> 1.5)
   puma (>= 5.0)
   rails (~> 8.0.0)
+  rails-i18n
   roo
   rubocop-rails-omakase
   selenium-webdriver

@@ -1,4 +1,5 @@
-# app/services/politician_pdf_service.rb
+# app/services/politician_pdf_service.pdf
+
 require "open-uri"
 require "pdf-reader"
 
@@ -33,7 +34,7 @@ class PoliticianPdfService
     pdf_content = download_pdf(pdf_url)
     unless pdf_content
       Rails.logger.error "Failed to download PDF for #{@politician.first_name} #{@politician.last_name}."
-      handle_missing_data
+      handle_missing_data(pdf_url)
       return
     end
 
@@ -45,16 +46,21 @@ class PoliticianPdfService
 
   private
 
-  def handle_missing_data
+  def handle_missing_data(pdf_url = nil)
     missing_info_message = "Oulala, c'est flou. Cette information n'est pas disponible dans la base de données de la Haute Autorité pour la Transparence de la Vie Publique (https://www.hatvp.fr/). Pourtant c'est requis par la loi n° 2013-907 du 11 octobre 2013 relative à la transparence de la vie publique. N'hésitez pas à en informer votre élu(e), il s'agit peut-être d'un oubli."
+    missing_info_message += " Lien du fichier analysé : #{pdf_url}" if pdf_url
     @politician.update(additional_info: missing_info_message)
   end
 
   def build_pdf_url
-    unless @politician.declaration_link.present?
-      @politician.update(declaration_link: BASE_URL + @file_name)
+    unless @file_name
+      Rails.logger.error "No file name found for #{@politician.first_name} #{@politician.last_name}."
+      return nil
     end
-    BASE_URL + @file_name
+
+    pdf_url = BASE_URL + @file_name
+    @politician.update(declaration_link: pdf_url) unless @politician.declaration_link.present?
+    pdf_url
   end
 
   def fetch_file_name
@@ -87,10 +93,15 @@ class PoliticianPdfService
 
   def extract_income_entries(text)
     entries = []
-    text.scan(/(Rémunération|indemnité|gratification)(.*?)(\d{4}\s*:\s*[\d\s,]+€)/im) do |_, _, income|
-      next if income.nil? || income.strip.empty?
-      entries << income.strip
+
+    # **Improved and more exhaustive pattern**
+    # Matches "YYYY : {amount} €" or "YYYY : {amount} Net" or "YYYY : {amount} Brute"
+    text.scan(/(\d{4})\s*:\s*([0-9\s,]+)\s*(€|Net|Brute)/) do |year, amount, currency|
+      next if amount.nil? || amount.strip.empty?
+      entry = "#{year} : #{amount.strip} #{currency}"
+      entries << entry
     end
+
     entries
   end
 end

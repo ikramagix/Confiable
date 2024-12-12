@@ -1,16 +1,9 @@
-#!/bin/bash
+#!/bin/bash 
 
 # Set up the environment correctly
 export PATH="/usr/local/bundle/bin:$PATH"
 
-# Step 1: Deploy application using Fly.io
-fly deploy
-if [ $? -ne 0 ]; then
-  echo "Fly.io deployment failed. Aborting release process."
-  exit 1
-fi
-
-# Step 2: Clear the database
+# Step 1: Clear the database
 echo "Dropping existing database..."
 bundle exec rails db:drop
 if [ $? -ne 0 ]; then
@@ -18,7 +11,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 3: Create the database
+# Step 2: Create the database
 echo "Creating database..."
 bundle exec rails db:create
 if [ $? -ne 0 ]; then
@@ -26,7 +19,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 4: Run database migrations
+# Step 3: Run database migrations
 echo "Running migrations..."
 bundle exec rails db:migrate
 if [ $? -ne 0 ]; then
@@ -34,7 +27,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 5: Run the DataGouvApiService to gather data
+# Step 4: Run the DataGouvApiService to gather data
 echo "Starting data gathering from DataGouv API..."
 bundle exec rails runner "DataGouvApiService.new.gather_data"
 if [ $? -ne 0 ]; then
@@ -42,7 +35,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 6: Run the PoliticianPdfService for all Politicians
+# Step 5: Run the PoliticianPdfService for all Politicians
 echo "Starting PDF analysis for all politicians..."
 bundle exec rails runner "
   Politician.find_each do |politician|
@@ -59,7 +52,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 7: Run the French encoding cleanup
+# Step 6: Run the French encoding cleanup
 echo "Starting French encoding cleanup..."
 bundle exec rails runner "require_relative 'fr_encoding_cleanup'"
 if [ $? -ne 0 ]; then
@@ -68,4 +61,4 @@ if [ $? -ne 0 ]; then
 fi
 
 # Final message
-echo "Deployment, release, and data gathering completed successfully."
+echo "Release process completed successfully."

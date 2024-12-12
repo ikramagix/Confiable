@@ -94,11 +94,13 @@ class PoliticianPdfService
   def extract_income_entries(text)
     entries = []
 
-    # **Improved and more exhaustive pattern**
-    # Matches "YYYY : {amount} €" or "YYYY : {amount} Net" or "YYYY : {amount} Brute"
-    text.scan(/(\d{4})\s*:\s*([0-9\s,]+)\s*(€|Net|Brute)/) do |year, amount, currency|
+    # **Improved pattern focusing on € as a key indicator of income**
+    # Matches "YYYY : {amount} €" or "{amount} €" with optional spaces and newlines
+    text.scan(/(\d{4})?\s*:?\s*([0-9\s,.]+)\s*€/) do |year, amount|
       next if amount.nil? || amount.strip.empty?
-      entry = "#{year} : #{amount.strip} #{currency}"
+      year ||= "Non disponible"
+      amount_cleaned = amount.gsub(/[\s,]/, "").strip
+      entry = "#{year} : #{amount_cleaned} €"
       entries << entry
     end
 

@@ -3,7 +3,15 @@
 # Set up the environment correctly
 export PATH="/usr/local/bundle/bin:$PATH"
 
-# Step 1: Clear the database
+# Step 1: Terminate all active connections to the database
+echo "Terminating active connections to the database..."
+bundle exec rails runner "ActiveRecord::Base.connection.execute(\"SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'confiable' AND pid <> pg_backend_pid();\")"
+if [ $? -ne 0 ]; then
+  echo "Failed to terminate active connections. Aborting release process."
+  exit 1
+fi
+
+# Step 2: Clear the database
 echo "Dropping existing database..."
 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rails db:drop
 if [ $? -ne 0 ]; then
@@ -11,7 +19,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 2: Create the database
+# Step 3: Create the database
 echo "Creating database..."
 bundle exec rails db:create
 if [ $? -ne 0 ]; then
@@ -19,7 +27,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 3: Run database migrations
+# Step 4: Run database migrations
 echo "Running migrations..."
 bundle exec rails db:migrate
 if [ $? -ne 0 ]; then
@@ -27,7 +35,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 4: Run the DataGouvApiService to gather data
+# Step 5: Run the DataGouvApiService to gather data
 echo "Starting data gathering from DataGouv API..."
 bundle exec rails runner "DataGouvApiService.new.gather_data"
 if [ $? -ne 0 ]; then
@@ -35,7 +43,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 5: Run the PoliticianPdfService for all Politicians
+# Step 6: Run the PoliticianPdfService for all Politicians
 echo "Starting PDF analysis for all politicians..."
 bundle exec rails runner "
   Politician.find_each do |politician|
@@ -52,7 +60,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 6: Run the French encoding cleanup
+# Step 7: Run the French encoding cleanup
 echo "Starting French encoding cleanup..."
 bundle exec rails runner "require_relative 'fr_encoding_cleanup'"
 if [ $? -ne 0 ]; then

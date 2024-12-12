@@ -3,43 +3,69 @@
 # Set up the environment correctly
 export PATH="/usr/local/bundle/bin:$PATH"
 
-# Prepare the database
-bundle exec rails db:prepare
-
-# Check if the previous command was successful
+# Step 1: Deploy application using Fly.io
+fly deploy
 if [ $? -ne 0 ]; then
-  echo "Database preparation failed, aborting data gathering."
+  echo "Fly.io deployment failed. Aborting release process."
   exit 1
 fi
 
-# Run the data gathering task using bundle exec to ensure the correct environment
-bundle exec rails data_gouv:gather_data
-
-# Check if the data gathering was successful
+# Step 2: Clear the database
+echo "Dropping existing database..."
+bundle exec rails db:drop
 if [ $? -ne 0 ]; then
-  echo "Data gathering failed."
+  echo "Database drop failed. Aborting release process."
   exit 1
 fi
 
-echo "Starting deployment and data fetching..."
+# Step 3: Create the database
+echo "Creating database..."
+bundle exec rails db:create
+if [ $? -ne 0 ]; then
+  echo "Database creation failed. Aborting release process."
+  exit 1
+fi
 
-# Loop through all politicians and perform the PDF analysis
-echo "Running analysis for all politicians..."
+# Step 4: Run database migrations
+echo "Running migrations..."
+bundle exec rails db:migrate
+if [ $? -ne 0 ]; then
+  echo "Database migration failed. Aborting release process."
+  exit 1
+fi
+
+# Step 5: Run the DataGouvApiService to gather data
+echo "Starting data gathering from DataGouv API..."
+bundle exec rails runner "DataGouvApiService.new.gather_data"
+if [ $? -ne 0 ]; then
+  echo "Data gathering failed. Aborting release process."
+  exit 1
+fi
+
+# Step 6: Run the PoliticianPdfService for all Politicians
+echo "Starting PDF analysis for all politicians..."
 bundle exec rails runner "
   Politician.find_each do |politician|
-    puts 'Processing: ' + politician.first_name.to_s + ' ' + politician.last_name.to_s
+    puts \"Processing: \#{politician.first_name} \#{politician.last_name}\"
     begin
       PoliticianPdfService.new(politician).fetch_and_analyze_pdf
     rescue => e
-      puts 'Error processing ' + politician.first_name.to_s + ' ' + politician.last_name.to_s + ': ' + e.message
+      puts \"Error processing \#{politician.first_name} \#{politician.last_name}: \#{e.message}\"
     end
   end
 "
-
-# Check if the analysis was successful
 if [ $? -ne 0 ]; then
   echo "PDF analysis for politicians failed."
   exit 1
 fi
 
-echo "Deployment and data fetching completed successfully."
+# Step 7: Run the French encoding cleanup
+echo "Starting French encoding cleanup..."
+bundle exec rails runner "require_relative 'fr_encoding_cleanup'"
+if [ $? -ne 0 ]; then
+  echo "French encoding cleanup failed. Aborting release process."
+  exit 1
+fi
+
+# Final message
+echo "Deployment, release, and data gathering completed successfully."

@@ -2,7 +2,7 @@
 require "roo"
 
 class DataGouvApiService
-  XLSX_PATH = Rails.root.join("public", "liste.xlsx") # Path to the local XLSX file
+  XLSX_PATH = Rails.root.join("public", "liste.xlsx")
 
   def gather_data
     xlsx_data = read_xlsx(XLSX_PATH)
@@ -44,10 +44,10 @@ class DataGouvApiService
       organization = row["organisme"].nil? ? "N/A" : row["organisme"].to_s.strip
       publication_date = row["date_publication"].nil? ? "N/A" : row["date_publication"].to_s.strip
       file_name = row["nom_fichier"].nil? ? "N/A" : row["nom_fichier"].to_s.strip
-  
+
       # Print the file name
       puts "Processing file: #{file_name}"
-  
+
       # Find or create a politician and update their details
       politician = Politician.find_or_initialize_by(last_name: last_name, first_name: first_name, position: position)
       politician.assign_attributes(
@@ -57,7 +57,7 @@ class DataGouvApiService
         organization: organization,
         publication_date: publication_date
       )
-  
+
       # Save the politician record
       if politician.save
         Rails.logger.info("Politician #{politician.first_name} #{politician.last_name} saved successfully.")
@@ -67,5 +67,5 @@ class DataGouvApiService
     end
   rescue StandardError => e
     Rails.logger.error("Error parsing XLSX data: #{e.message}")
-  end  
+  end
 end

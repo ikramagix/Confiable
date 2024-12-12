@@ -21,18 +21,18 @@ module Confiable
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    
+
     config.time_zone = "Paris"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    # i18n locale configuration 
+    # i18n locale configuration
     # Set the default locale to French
     config.i18n.default_locale = :fr
 
     # Ensure all available locales are loaded
-    config.i18n.available_locales = [:en, :fr]
+    config.i18n.available_locales = [ :en, :fr ]
 
     # Fallback to English if a translation is missing
-    config.i18n.fallbacks = [:en]    
+    config.i18n.fallbacks = [ :en ]
   end
 end

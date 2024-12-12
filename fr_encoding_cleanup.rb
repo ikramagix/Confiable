@@ -45,7 +45,7 @@ Politician.find_each do |politician|
     next if current_value.nil?
 
     cleaned_value = clean_french_encoding(current_value)
-    
+
     if current_value != cleaned_value
       politician.update_column(field, cleaned_value)
       updated = true

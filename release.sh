@@ -5,7 +5,7 @@ export PATH="/usr/local/bundle/bin:$PATH"
 
 # Step 1: Clear the database
 echo "Dropping existing database..."
-bundle exec rails db:drop
+DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rails db:drop
 if [ $? -ne 0 ]; then
   echo "Database drop failed. Aborting release process."
   exit 1

@@ -3,15 +3,7 @@
 # Set up the environment correctly
 export PATH="/usr/local/bundle/bin:$PATH"
 
-# Step 1: Terminate all active connections to the database
-echo "Terminating active connections to the database..."
-bundle exec rails runner "ActiveRecord::Base.connection.execute(\"SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'confiable' AND pid <> pg_backend_pid();\")"
-if [ $? -ne 0 ]; then
-  echo "Failed to terminate active connections. Aborting release process."
-  exit 1
-fi
-
-# Step 2: Clear the database
+# Step 1: Drop the database
 echo "Dropping existing database..."
 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rails db:drop
 if [ $? -ne 0 ]; then
@@ -19,7 +11,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 3: Create the database
+# Step 2: Create the database
 echo "Creating database..."
 bundle exec rails db:create
 if [ $? -ne 0 ]; then
@@ -27,7 +19,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 4: Run database migrations
+# Step 3: Run database migrations
 echo "Running migrations..."
 bundle exec rails db:migrate
 if [ $? -ne 0 ]; then
@@ -35,38 +27,39 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 5: Run the DataGouvApiService to gather data
-echo "Starting data gathering from DataGouv API..."
-bundle exec rails runner "DataGouvApiService.new.gather_data"
+# Step 4: Schedule the DataGouvApiJob (which triggers the others)
+echo "Scheduling DataGouvApiJob..."
+bundle exec rails runner "DataGouvApiJob.perform_later"
 if [ $? -ne 0 ]; then
-  echo "Data gathering failed. Aborting release process."
+  echo "Failed to schedule DataGouvApiJob. Aborting release process."
   exit 1
 fi
 
-# Step 6: Run the PoliticianPdfService for all Politicians
-echo "Starting PDF analysis for all politicians..."
-bundle exec rails runner "
-  Politician.find_each do |politician|
-    puts \"Processing: \#{politician.first_name} \#{politician.last_name}\"
-    begin
-      PoliticianPdfService.new(politician).fetch_and_analyze_pdf
-    rescue => e
-      puts \"Error processing \#{politician.first_name} \#{politician.last_name}: \#{e.message}\"
-    end
-  end
-"
-if [ $? -ne 0 ]; then
-  echo "PDF analysis for politicians failed."
-  exit 1
-fi
+# Step 5: Wait for Sidekiq to process jobs
+echo "Waiting for Sidekiq jobs to complete..."
+START_TIME=$(date +%s)
+MAX_WAIT_TIME=$((12 * 3600)) # 12-hour timeout
+SLEEP_INTERVAL=60 # Check status every 60 seconds
 
-# Step 7: Run the French encoding cleanup
-echo "Starting French encoding cleanup..."
-bundle exec rails runner "require_relative 'fr_encoding_cleanup'"
-if [ $? -ne 0 ]; then
-  echo "French encoding cleanup failed. Aborting release process."
-  exit 1
-fi
+while true; do
+  # Check Sidekiq queue status
+  ACTIVE_JOBS=$(bundle exec rails runner "puts Sidekiq::Queue.new.size + Sidekiq::Workers.new.size + Sidekiq::RetrySet.new.size")
+  if [ "$ACTIVE_JOBS" -eq 0 ]; then
+    echo "All Sidekiq jobs completed successfully."
+    break
+  fi
+
+  CURRENT_TIME=$(date +%s)
+  ELAPSED_TIME=$((CURRENT_TIME - START_TIME))
+  
+  if [ "$ELAPSED_TIME" -gt "$MAX_WAIT_TIME" ]; then
+    echo "Timeout reached. Some Sidekiq jobs are still running after 12 hours."
+    exit 1
+  fi
+  
+  echo "Waiting for jobs to complete. Jobs remaining: $ACTIVE_JOBS. Elapsed time: $((ELAPSED_TIME / 60)) minutes."
+  sleep $SLEEP_INTERVAL
+done
 
 # Final message
 echo "Release process completed successfully."

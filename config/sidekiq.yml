@@ -1,4 +1,4 @@
-:concurrency: 10
+:concurrency: 5
 :queues:
-  - default
-  - high_priority
+  - [default, 2] # lower priority (default queue)
+  - [high_priority, 1] # higher priority queue for long tasks

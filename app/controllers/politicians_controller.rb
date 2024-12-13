@@ -72,13 +72,6 @@ class PoliticiansController < ApplicationController
   def show
     # @politician is already set by the before_action
     @politician = Politician.find(params[:id])
-
-    # Optionally, trigger the job to fetch and analyze the PDF
-    FetchPoliticianPdfJob.perform_later(@politician.id)
-
-    # or directly call the service (if not using a job)
-    # service = PoliticianPdfService.new(@politician)
-    # service.fetch_and_analyze_pdf
   end
 
   private

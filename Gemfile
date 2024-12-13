@@ -83,3 +83,5 @@ gem "bundler", "~> 2.5"
 gem "roo"
 
 gem "rails-i18n"
+
+gem "sidekiq", "~> 7.3"

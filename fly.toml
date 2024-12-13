@@ -35,6 +35,12 @@ console_command = '/rails/bin/rails console'
     [checks.status.headers]
       X-Forwarded-Proto = 'https'
 
+  [checks.redis]
+    type = "tcp"
+    port = 6379
+    interval = "10s"
+    timeout = "2s"
+
 [[vm]]
   memory = '1gb'
   cpu_kind = 'shared'
@@ -43,3 +49,18 @@ console_command = '/rails/bin/rails console'
 [[statics]]
   guest_path = '/rails/public'
   url_prefix = '/'
+
+[[processes]]
+  app = "bin/rails server"
+  worker = "bundle exec sidekiq -C config/sidekiq.yml"
+
+[services]
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+[env]
+  REDIS_URL = "redis://default:@redis.internal:6379/0"

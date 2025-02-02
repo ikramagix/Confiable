@@ -186,7 +186,7 @@ GEM
     parser (3.3.6.0)
       ast (~> 2.4.1)
       racc
-    pdf-reader (2.13.0)
+    pdf-reader (2.14.0)
       Ascii85 (>= 1.0, < 3.0, != 2.0.0)
       afm (~> 0.2.1)
       hashery (~> 2.0)
@@ -367,7 +367,7 @@ DEPENDENCIES
   jbuilder
   net-http (~> 0.6.0)
   open-uri (~> 0.5.0)
-  pdf-reader (~> 2.13)
+  pdf-reader (~> 2.14)
   pg (~> 1.5)
   puma (>= 5.0)
   rails (~> 8.0.1)

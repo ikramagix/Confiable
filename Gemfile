@@ -84,4 +84,4 @@ gem "roo"
 
 gem "rails-i18n"
 
-gem "sidekiq", "~> 7.3"
+gem "sidekiq", "~> 8.0"

@@ -16,7 +16,7 @@ services:
       - key: DATABASE_URL
         fromDatabase:
           name: confiable-db-pro
-          property: connectionString
+          property: externalConnectionString
       - key: RAILS_MASTER_KEY
         sync: false
       - key: WEB_CONCURRENCY

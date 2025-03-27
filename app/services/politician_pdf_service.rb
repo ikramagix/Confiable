@@ -71,8 +71,9 @@ class PoliticianPdfService
   end
 
   def download_pdf(url)
-    URI.open(url)
-  rescue OpenURI::HTTPError => e
+    uri = URI.parse(url)
+    Net::HTTP.get(uri)
+  rescue StandardError => e
     Rails.logger.error "Failed to download PDF from #{url}: #{e.message}"
     nil
   end

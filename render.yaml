@@ -1,7 +1,7 @@
 databases:
   - name: prodconfiabledb
     databaseName: prodconfiabledb
-    user: gr33kurious
+    user: jbw
     plan: free
 
 services:

@@ -101,7 +101,7 @@ GEM
     crass (1.0.6)
     csv (3.3.4)
     date (3.4.1)
-    debug (1.10.0)
+    debug (1.11.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
     devise (4.9.4)
@@ -117,6 +117,7 @@ GEM
       dotenv (= 3.1.8)
       railties (>= 6.1)
     drb (2.2.1)
+    erb (5.0.1)
     erubi (1.13.1)
     faussaire (1.0.0)
     globalid (1.2.1)
@@ -189,7 +190,7 @@ GEM
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
-    psych (5.2.3)
+    psych (5.2.6)
       date
       stringio
     public_suffix (6.0.1)
@@ -238,7 +239,8 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.2.1)
-    rdoc (6.13.1)
+    rdoc (6.14.0)
+      erb
       psych (>= 4.0.0)
     redis-client (0.24.0)
       connection_pool
@@ -304,7 +306,7 @@ GEM
       sprockets (>= 3.0.0)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
-    stringio (3.1.6)
+    stringio (3.1.7)
     table_print (1.5.7)
     tempfile (0.3.1)
     thor (1.3.2)

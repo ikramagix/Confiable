@@ -66,7 +66,7 @@ gem "faussaire"
 
 gem "table_print", "~> 1.5"
 
-gem "pdf-reader", "~> 2.14"
+gem "pdf-reader", "~> 2.15"
 
 gem "csv", "~> 3.3"
 

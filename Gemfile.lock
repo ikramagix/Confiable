@@ -154,7 +154,7 @@ GEM
     marcel (1.1.0)
     matrix (0.4.2)
     mini_mime (1.1.5)
-    minitest (5.26.0)
+    minitest (5.26.1)
     msgpack (1.8.0)
     net-http (0.6.0)
       uri
@@ -249,7 +249,7 @@ GEM
     redis-client (0.26.1)
       connection_pool
     regexp_parser (2.10.0)
-    reline (0.6.2)
+    reline (0.6.3)
       io-console (~> 0.5)
     responders (3.1.1)
       actionpack (>= 5.2)
@@ -323,7 +323,7 @@ GEM
     tsort (0.2.0)
     ttfunk (1.8.0)
       bigdecimal (~> 3.1)
-    turbo-rails (2.0.17)
+    turbo-rails (2.0.20)
       actionpack (>= 7.1.0)
       railties (>= 7.1.0)
     tzinfo (2.0.6)

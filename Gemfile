@@ -72,7 +72,7 @@ gem "csv", "~> 3.3"
 
 gem "tempfile", "~> 0.3.1"
 
-gem "net-http", "~> 0.6.0"
+gem "net-http", "~> 0.8.0"
 
 gem "uri", "~> 1.1.1"
 
